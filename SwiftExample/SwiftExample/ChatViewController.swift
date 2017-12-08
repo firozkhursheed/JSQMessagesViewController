@@ -30,7 +30,9 @@ class ChatViewController: JSQMessagesViewController {
          *  Based on the Settings of the user display two differnent type of bubbles.
          *
          */
-        
+      
+      inputToolbar.contentView!.textView!.jsqPasteDelegate = self
+
         if defaults.bool(forKey: Setting.removeBubbleTails.rawValue) {
             // Make taillessBubbles
             incomingBubble = JSQMessagesBubbleImageFactory(bubble: UIImage.jsq_bubbleCompactTailless(), capInsets: UIEdgeInsets.zero, layoutDirection: UIApplication.shared.userInterfaceLayoutDirection).incomingMessagesBubbleImage(with: UIColor.jsq_messageBubbleBlue())
@@ -434,4 +436,10 @@ class ChatViewController: JSQMessagesViewController {
         return kJSQMessagesCollectionViewCellLabelHeightDefault;
     }
     
+}
+
+extension ChatViewController: JSQMessagesComposerTextViewPasteDelegate {
+  public func composerTextView(_ textView: JSQMessagesComposerTextView!, shouldPasteWithSender sender: Any!) -> Bool {
+    return true
+  }
 }
